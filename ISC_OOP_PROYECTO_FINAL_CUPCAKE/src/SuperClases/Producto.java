@@ -17,6 +17,7 @@ public class Producto {
     protected String nombre; // Nombre del producto
     protected String descripcion; //Descripción breve del producto
     protected double precio; //Precio en pesos del producto
+
     protected int stock; //Unidades del producto con las que se cuentan
     protected String marca; //Marca del producto
     //Talla, ya sea en XCH, CH, M, G, EG, etc. O En forma númerica para el calzado
@@ -52,19 +53,22 @@ public class Producto {
 
     //Constructor default
     public Producto() {
-        this.nombre = "Producto";
-        this.descripcion = "Esto es un producto";
+        this.nombre = "";
+        this.descripcion = "";
         this.precio = 0;
         this.stock = 0;
-        this.marca = "Marca";
-        this.talla = "Talla";
-        this.color = "Color";
-        this.categoria = "Categoria";
-        this.tipo = "Tipo";
-        this.genero = "Género";
+        this.marca = "";
+        this.talla = "";
+        this.color = "";
+        this.categoria = "";
+        this.tipo = "";
+        this.genero = "";
     }
 
     //Metodos get y set para cada atributo
+    // *El atributo de precio solo cuenta con metodos get, ya que para el set
+    //se creará el método modificar precio, el cual solo puede ser usado por 
+    //empleados de rango gerentes o supervisores
     public String getNombre() {
         return nombre;
     }
@@ -83,10 +87,6 @@ public class Producto {
 
     public double getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
     }
 
     public int getStock() {
@@ -144,5 +144,4 @@ public class Producto {
     public void setGenero(String genero) {
         this.genero = genero;
     }
-
 }
