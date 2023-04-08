@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package isc_oop_proyecto_final_cupcake;
 
-/**
- *
- * @author gambo
- */
+import Personal.*;
+import Productos.*;
+
 public class ISC_OOP_PROYECTO_FINAL_CUPCAKE {
 
     /**
@@ -15,6 +10,9 @@ public class ISC_OOP_PROYECTO_FINAL_CUPCAKE {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Pantalones pant = new Pantalones();
+        pant.guardarProductos();
+        System.out.println(pant.invPantalones);
+
     }
-    
 }

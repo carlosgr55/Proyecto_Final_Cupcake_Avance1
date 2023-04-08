@@ -1,6 +1,7 @@
 package Personal;
 
 import SuperClases.Persona;
+import java.util.ArrayList;
 
 /*
     La clase empleado sirve para almacenar informacion de las personas que laboran
@@ -64,4 +65,13 @@ public class Empleados extends Persona {
         this.sueldo = sueldo;
     }
 
+    private ArrayList<String> puestosAut = new ArrayList<>();
+
+    public boolean isAutorizado(Empleados empleado) {
+        puestosAut.add("Gerente");
+        puestosAut.add("Supervisor");
+        return puestosAut.contains(empleado.getPuesto());
+    }
+
+    
 }

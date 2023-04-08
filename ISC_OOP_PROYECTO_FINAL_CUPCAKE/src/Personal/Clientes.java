@@ -1,6 +1,8 @@
 package Personal;
 
 import SuperClases.Persona;
+import SuperClases.Producto;
+import java.util.ArrayList;
 
 /*
     La clase clientes maneja la informacion relacionada a los usuarios esta maneja
@@ -13,9 +15,8 @@ public class Clientes extends Persona {
     private String email; //Medio de contacto para el cliente
     private Direccion dirFact; //Dirección de facturacion
     private Direccion dirEnvio; //Dirección de envíos de los productos
-    
-    //Constructores
 
+    //Constructores
     public Clientes(String clientID, String email, Direccion dirFact, Direccion dirEnvio, String nombre, String apellido, int edad, String telefono) {
         super(nombre, apellido, edad, telefono);
         this.clientID = clientID;
@@ -31,10 +32,8 @@ public class Clientes extends Persona {
         this.dirFact = null;
         this.dirEnvio = null;
     }
-    
 
     //Métodos get y set
-
     public String getClientID() {
         return clientID;
     }
@@ -66,85 +65,72 @@ public class Clientes extends Persona {
     public void setDirEnvio(Direccion dirEnvio) {
         this.dirEnvio = dirEnvio;
     }
+       //CARRITO DE COMPRAS
+    /*
+    Lo que hace un cliente, cliente, es que tiene un carrito de compras
+    en el que cual puede agregar o quitar productos como guste, en esta parte
+    del código se declaran dos ArrayList.
+    */
     
-}
-
-//La clase direccion se crea aparte 
-class Direccion {
-
-    private String calle;
-    private int numero;
-    private String colonia;
-    private String cp;
-    private String ciudad;
-    private String estado;
-
-    //Constructores
-    public Direccion(String calle, int numero, String colonia, String cp, String ciudad, String estado) {
-        this.calle = calle;
-        this.numero = numero;
-        this.colonia = colonia;
-        this.cp = cp;
-        this.ciudad = ciudad;
-        this.estado = estado;
+    
+    //Para almacenar los productos que el cliente desee comprar se crea 
+    //carritoItems, un ArrayList que guarda las instancias de productos
+    private ArrayList<Producto> carritoItems = new ArrayList<>();
+    
+    //Para almacenar la informacion de los precios, se guardan los precios en un
+    //ArrayList diferente
+    private ArrayList<Double> precios = new ArrayList<>();
+    
+    public ArrayList getCarritoItems(){
+        return carritoItems;
+    }
+    public ArrayList getPrecios(){
+        return precios;
     }
 
-    public Direccion() {
-        this.calle = "";
-        this.numero = 0;
-        this.colonia = "";
-        this.cp = "";
-        this.ciudad = "";
-        this.estado = "";
+    
+    //El carrito se controla con los métodos addItem, el cual agrega productos
+    //Al carrito si estos están en existenci
+    public void addItem(Producto producto) {
+        if (producto.getStock() > 0) { //Se verifica la disponibilidad del producto
+            carritoItems.add(producto); //Se añade el producto al carrito
+            //Al inventario del producto, se le disminuye 1 unidad
+            producto.setStock(producto.getStock() - 1); 
+            precios.add(producto.getPrecio());
+            
+            //Se especifica el producto que fue añadido
+            System.out.println("Se ha añadido un " + producto.getNombre());
+        } 
+        //En caso de que el producto no esté disponible, se le hace saber
+        //al usuario
+        else {
+            System.out.println("Producto no disponible");
+        }
     }
+    
+    //El método quitarItem sirve en caso de que el cliente desee eliminar un producto
+    //Del carrito, el método recibe la posición del carrito que se desee eliminar
+    public void quitarItem(int index) {
+        
+        //Primero se obtiene el stock actual del producto
+        int stock = carritoItems.get(index).getStock();
+        //Y se le agrega una unidad
+        int newStock = stock + 1;
+        carritoItems.get(index).setStock(newStock);
+        
+        //Después se borran del carrito los productos deseados
+        carritoItems.remove(index);
+        precios.remove(index);
 
-    //Métodos get y set
-    public String getCalle() {
-        return calle;
     }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
+    
+    //Con este metodo se calcula y devuelve el subtotal de los productos que 
+    //Se encuentran en el carrito
+    public double calcSubTotal(){
+        double suma = 0; //Se inicializa la variable que guardará la suma del subtotal
+        for (int i = 0; i < precios.size(); i++){ //Iteración para sumar los elementos del ArrayList
+            suma += precios.get(i);     
+        }
+        return suma; 
     }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public String getColonia() {
-        return colonia;
-    }
-
-    public void setColonia(String colonia) {
-        this.colonia = colonia;
-    }
-
-    public String getCp() {
-        return cp;
-    }
-
-    public void setCp(String cp) {
-        this.cp = cp;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
 }

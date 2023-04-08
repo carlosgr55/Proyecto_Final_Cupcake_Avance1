@@ -1,5 +1,9 @@
 package SuperClases;
 
+import Personal.Empleados;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /*
 La clase Producto se crea con el principal objetivo de servir como Superclase
 para las subclases que utilizarán para modelar los atributos y métodos de cada
@@ -8,8 +12,9 @@ los productos individuales según su clase.
 
 Las subclases de esta clase se encuentran en el paquete Productos.
  */
-public class Producto {
+public abstract class Producto {
 
+    Scanner sc = new Scanner(System.in);
     /*
     Los atributos se declaran con el modificador de acceso protected para 
     simplificar sus usos en las subclases
@@ -36,7 +41,7 @@ public class Producto {
     consumidor final
      */
     protected String genero;
-
+    ArrayList<Producto> productos = new ArrayList<>();
     //Constructor con argumentos 
     public Producto(String nombre, String descripcion, double precio, int stock, String marca, String talla, String color, String categoria, String tipo, String genero) {
         this.nombre = nombre;
@@ -66,9 +71,9 @@ public class Producto {
     }
 
     //Metodos get y set para cada atributo
-    // *El atributo de precio solo cuenta con metodos get, ya que para el set
-    //se creará el método modificar precio, el cual solo puede ser usado por 
-    //empleados de rango gerentes o supervisores
+    // *El atributo de precio solo cuenta con metodo get, ya que
+    //Para modificar este atributo es necesaria una autorización que solo 
+    //Los gerentes o supervisores tienen
     public String getNombre() {
         return nombre;
     }
@@ -81,6 +86,10 @@ public class Producto {
         return descripcion;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -91,10 +100,6 @@ public class Producto {
 
     public int getStock() {
         return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 
     public String getMarca() {
@@ -144,4 +149,27 @@ public class Producto {
     public void setGenero(String genero) {
         this.genero = genero;
     }
+
+    public void cambiarPrecio(Empleados empleado) {
+        if (empleado.isAutorizado(empleado)) {
+            System.out.println("Precio nuevo");
+            this.precio = sc.nextDouble();
+        } else {
+            System.out.println("No tienes autorización para cambiar el precio");
+        }
+
+    }
+
+    public void cambiarStock(Empleados empleado) {
+        if (empleado.isAutorizado(empleado)) {
+            System.out.println("Stock nuevo");
+            this.stock = sc.nextInt();
+        } else {
+            System.out.println("No tienes autorizacion");
+        }
+    }
+
+    public abstract Producto crearProductos();
+    
+    public abstract void guardarProductos();
 }
